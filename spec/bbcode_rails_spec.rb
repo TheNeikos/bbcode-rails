@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Bbcode::Rails do
+describe BBCode do
   it 'has a version number' do
-    expect(Bbcode::Rails::VERSION).not_to be nil
+    expect(BBCode::VERSION).not_to be nil
   end
 
   it 'does something useful' do

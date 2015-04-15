@@ -1,4 +1,4 @@
-# BBCode::Rails
+# BBCode for Rails
 
 `bbcode-rails` is a gem for simple integration of BBCode into your application.
 It does not assume your feature scope and thus does not include every tag out
