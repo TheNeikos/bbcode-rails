@@ -40,11 +40,11 @@ tags are not big enough to warrant this, so one can also group them. For example
 
 You can use the bbcode generator to quickly setup a new tag, simple run
 
-    $ rails generate bbcode tagname
+    $ rails generate bb_code:tag tagname
 
 For example if we want to create a bbcode tag to easily link to a user
 
-    $ rails generate bbcode user
+    $ rails generate bb_code:tag user
 
 This will create `app/bbcode/user_tag.rb`.
 
