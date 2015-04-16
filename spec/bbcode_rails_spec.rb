@@ -30,4 +30,9 @@ describe BBCode do
       eq "<p>Text: Hello <em>Yo</em></p><em>User: Neikos</em>"
     )
   end
+
+  it 'correctly parses the user tag with quotes' do
+    expect(UserTag).not_to be nil
+    expect(BBCode.parse "[user=\"Neikos\"]").to eq "<p>Name: Neikos</p>"
+  end
 end

@@ -30,3 +30,4 @@ class String
 end
 
 require 'bbcode-rails/railtie' if defined?(Rails)
+require 'bbcode-rails/tag' unless defined?(Rails)
