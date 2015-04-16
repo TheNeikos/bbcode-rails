@@ -1,8 +1,6 @@
 require "bbcode-rails/version"
 
 module BBCode
-  PATH = "app/bbcode"
-
   @@tags = []
   def self.tags
     @@tags
