@@ -24,7 +24,7 @@ module BBCode
 end
 
 class String
-  def to_bbcode
+  def bbcode_to_html
     BBCode.parse(self)
   end
 end
