@@ -68,7 +68,7 @@ class UserTag < BBCode::Tag
     name :user, :argument, :no_closing_tag
     on_layout do |args|
         user = User.find_by_id(args[1])
-        render partial: 'shared/userquote', locals: user
+        render partial: 'shared/userquote', locals: { user: user }
     end
 end
 ```
