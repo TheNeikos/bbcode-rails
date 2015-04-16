@@ -17,6 +17,9 @@ class BBCode::Tag
     self.view_paths = "app/views"
   end
 
+  def self.instance
+    @_tag ||= new
+  end
 
   def self.inherited subclass
     BBCode.tags << subclass

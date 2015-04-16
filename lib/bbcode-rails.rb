@@ -16,7 +16,7 @@ module BBCode
     str.gsub!( "'", '&apos;' )
 
     @@tags.each do |t|
-      str.gsub!(t.regex) { t.new.instance_exec($~, &t.block) }
+      str.gsub!(t.regex) { t.instance.instance_exec($~, &t.block) }
     end
     str
   end
