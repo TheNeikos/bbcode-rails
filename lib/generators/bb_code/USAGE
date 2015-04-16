@@ -1,0 +1,8 @@
+Description:
+    Generates a BBCode Tag with the given name.
+
+Example:
+    rails generate bbcode:tag user
+
+    This will create:
+        app/bbcode/user_tag.rb
