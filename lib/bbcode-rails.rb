@@ -19,20 +19,27 @@ module BBCode
       BBCode.tags << subclass
     end
 
-    def self.name n, args={}
-      @@regex = /\[#{n.to_s}\](.+?)\[\/#{n.to_s}\]/mi
+    def self.name n, *args
+      if args.include? :argument
+        arg = "=(.+?)"
+      end
+      if args.include? :no_closing_tag
+        @regex = /\[#{n.to_s}#{arg}\]/mi
+      else
+        @regex = /\[#{n.to_s}#{arg}\](.+?)\[\/#{n.to_s}\]/mi
+      end
     end
 
     def self.on_layout &b
-      @@block = b
+      @block = b
     end
 
     def self.regex
-      @@regex
+      @regex
     end
 
     def self.block
-      @@block
+      @block
     end
   end
 end

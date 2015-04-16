@@ -44,9 +44,35 @@ For example if we want to create a bbcode tag to easily link to a user
 
     $ rails generate bbcode user
 
-This will create `app/bbcode/user.rb`.
+This will create `app/bbcode/user_tag.rb`.
 
-TODO: Add more information
+```ruby
+#app/bbcode/user.rb
+
+class UserTag < BBCode::Tag
+    name :user
+    on_layout do |args|
+        "TODO: Implement user tag"
+    end
+end
+```
+
+You could now add something like:
+
+```ruby
+#app/bbcode/user.rb
+
+class UserTag < BBCode::Tag
+    name :user, :argument, :no_closing_tag
+    on_layout do |args|
+        user = User.find_by_id(args[1])
+        render partial: 'shared/userquote', locals: user
+    end
+end
+```
+
+Of course, the limitations are your knowledge in ruby and rails :)
+
 
 ## Contributing
 
