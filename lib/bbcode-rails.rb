@@ -16,39 +16,11 @@ module BBCode
     str.gsub!( "'", '&apos;' )
 
     @@tags.each do |t|
-      str.gsub!(t.regex) { t.block.call($~) }
+      str.gsub!(t.regex) { t.new.instance_exec($~, &t.block) }
     end
     str
   end
 
-  class Tag
-    def self.inherited subclass
-      BBCode.tags << subclass
-    end
-
-    def self.name n, *args
-      if args.include? :argument
-        arg = "=(.+?)"
-      end
-      if args.include? :no_closing_tag
-        @regex = /\[#{n.to_s}#{arg}\]/mi
-      else
-        @regex = /\[#{n.to_s}#{arg}\](.+?)\[\/#{n.to_s}\]/mi
-      end
-    end
-
-    def self.on_layout &b
-      @block = b
-    end
-
-    def self.regex
-      @regex
-    end
-
-    def self.block
-      @block
-    end
-  end
 end
 
 class String
