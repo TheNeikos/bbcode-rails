@@ -8,6 +8,13 @@ module BBCode
 
   def self.parse str
     str = str.dup
+
+    str.gsub!( '&', '&amp;' )
+    str.gsub!( '<', '&lt;' )
+    str.gsub!( '>', '&gt;' )
+    str.gsub!( '"', '&quot;' )
+    str.gsub!( "'", '&apos;' )
+
     @@tags.each do |t|
       str.gsub!(t.regex) { t.block.call($~) }
     end
