@@ -15,6 +15,16 @@ module BBCode
     str.gsub!( '"', '&quot;' )
     str.gsub!( "'", '&apos;' )
 
+    # For eager loading
+    if defined?(Rails) && Rails.env.development?
+      str.scan(/\[(\w+)(?:=.+)?\]/).each do |tagname|
+        begin
+          "#{tagname[0]}_tag".camelize.constantize
+        rescue NameError
+        end
+      end
+    end
+
     @@tags.each do |t|
       str.gsub!(t.regex) { t.instance.instance_exec($~, &t.block) }
     end

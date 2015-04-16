@@ -22,6 +22,8 @@ class BBCode::Tag
   end
 
   def self.inherited subclass
+    # In case we autoreload, remove earlier instances
+    BBCode.tags.delete_if {|c| c.to_s == subclass.to_s }
     BBCode.tags << subclass
   end
 

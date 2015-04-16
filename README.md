@@ -32,9 +32,12 @@ Or install it yourself as:
 ## Usage
 
 To keep developement simple and easy to understand all tag definitions are found
-in `app/bbcode/`. While it is usually better to have one file per tag, usually
-tags are not big enough to warrant this, so one can also group them. For example
-`styling.rb` could have the simplest tags in it.
+in `app/bbcode/`. It is one file per tag.
+
+#### Note
+
+While in development the tags are loaded on use, in production they are then
+eager loaded.
 
 ### Creating a new tag
 
