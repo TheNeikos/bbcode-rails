@@ -1,5 +1,7 @@
 # BBCode for Rails
 
+[![Gem Version](https://badge.fury.io/rb/bbcode-rails.svg)](http://badge.fury.io/rb/bbcode-rails)
+
 `bbcode-rails` is a gem for simple integration of BBCode into your application.
 It does not assume your feature scope and thus does not include every tag out
 there. However, for ease of developement several BBCode tags are included,
