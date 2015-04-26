@@ -6,6 +6,7 @@ else
   end
 end
 
+
 class BBCode::Tag
   if defined?(Rails)
     include AbstractController::Rendering
@@ -54,13 +55,13 @@ class BBCode::Tag
       result = @content.map(&:to_s).join('')
     end
     if has_option(:content) and has_option(:argument)
-      get_block.call(@argument, result)
+      self.instance_exec(@argument, result, &get_block)
     elsif has_option :content
-      get_block.call(result)
+      self.instance_exec(result, &get_block)
     elsif has_option :argument
-      get_block.call(@argument)
+      self.instance_exec(@argument, &get_block)
     else
-      get_block.call
+      self.instance_exec(&get_block)
     end
   end
 
