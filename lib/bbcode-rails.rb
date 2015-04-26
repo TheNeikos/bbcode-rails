@@ -12,7 +12,7 @@ module BBCode
   def self.get_tag_by_name name
     if defined?(Rails) && Rails.env.development?
       begin
-        "#{p}_tag".camelize.constantize
+        "#{name}_tag".camelize.constantize
       rescue NameError
       end
     end
@@ -167,8 +167,8 @@ module BBCode
 end
 
 class String
-  def bbcode_to_html
-    BBCode.parse(self)
+  def bbcode_to_html raise_error = false
+    BBCode.parse(self, raise_error)
   end
 end
 
