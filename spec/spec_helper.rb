@@ -2,33 +2,39 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'bbcode-rails'
 
 class ITag < BBCode::Tag
-  block_name :i
+  block_options :content
 
-  on_layout do |args|
-    "<em>#{args[1]}</em>"
+  on_layout do |content|
+    "<em>#{content}</em>"
+  end
+end
+
+class BTag < BBCode::Tag
+  block_options :content
+
+  on_layout do |content|
+    "<strong>#{content}</strong>"
   end
 end
 
 class BrTag < BBCode::Tag
-  block_name :br, :no_closing_tag
-
   on_layout do |args|
     "<br>"
   end
 end
 
 class UserTag < BBCode::Tag
-  block_name :user, :no_closing_tag, :argument
+  block_options :content, :argument
 
   on_layout do |args|
-    "<p>Name: #{args[1]}</p>"
+    "<p>Name: #{args}</p>"
   end
 end
 
 class QuoteTag < BBCode::Tag
-  block_name :quote, :argument
+  block_options :argument, :content
 
-  on_layout do |args|
-    "<p>Text: #{args[2]}</p><em>User: #{args[1]}</em>"
+  on_layout do |args, content|
+    "<p>Text: #{content}</p><em>User: #{args}</em>"
   end
 end
