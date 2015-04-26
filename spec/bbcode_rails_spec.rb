@@ -35,4 +35,25 @@ describe BBCode do
     expect(UserTag).not_to be nil
     expect(BBCode.parse "[user=\"Neikos\"]").to eq "<p>Name: Neikos</p>"
   end
+
+  it 'doesnt care about invalid tag nesting' do
+    expect(ITag).not_to be nil
+    expect(BTag).not_to be nil
+
+    expect(BBCode.parse "Hello [i][b]Neikos[/i][/b]").to eq "Hello [i][b]Neikos[/i][/b]"
+  end
+
+  it 'doesnt parse unknown tags' do
+    expect(BBCode.parse "[what]'s [/up]").to eq "[what]&apos;s [/up]"
+  end
+
+  it 'doesnt error out when closing inexisting tags' do
+    expect(BTag).not_to be nil
+    expect(BBCode.parse "Hey [b] W [/fg] [/b] asd").to eq "Hey <strong> W [/fg] </strong> asd"
+  end
+
+  it 'should reraise errors if one chooses so' do
+    expect(BTag).not_to be nil
+    expect{BBCode.parse "Heya [b=Neikos]", true}.to raise_error(BBCode::ParseError)
+  end
 end
