@@ -28,11 +28,6 @@ module BBCode
     str.gsub!('"', '&quot;')
     str.gsub!("'", '&apos;')
 
-    # Taken from bb-ruby, who took it from Rails Actionpack
-    str.gsub!(/\r\n?/, "\n") # \r\n and \r => \n
-    str.gsub!(/\n+/, '<br>')  # 1+ newline   => br
-
-
     # Let's iterate over the pieces to build a tree
     # It works like this:
     # For each object you have two things:
@@ -159,7 +154,15 @@ module BBCode
         end
       end
 
-      result.map(&:to_s).join('').strip
+      result_str = result.map(&:to_s).join('').strip
+
+      # extracted from bb-ruby, which extracted it from Rails ActionPack
+      start_tag = '<p>'
+      result_str.gsub!(/\r\n?/, "\n")                   # \r\n and \r => \n
+      result_str.gsub!(/\n\n+/, "</p>\n\n#{start_tag}") # 2+ newline  => paragraph
+      result_str.gsub!(/([^\n]\n)(?=[^\n])/, '\1<br>')  # 1 newline   => br
+      result_str.insert 0, start_tag
+      result_str << '</p>'
     rescue BBCode::ParseError => e
       if raise_error
         raise e
