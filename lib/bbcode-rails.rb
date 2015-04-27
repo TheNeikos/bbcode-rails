@@ -22,11 +22,16 @@ module BBCode
   def self.parse str, raise_error=false
     str = str.dup
 
-    str.gsub!( '&', '&amp;' )
-    str.gsub!( '<', '&lt;' )
-    str.gsub!( '>', '&gt;' )
-    str.gsub!( '"', '&quot;' )
-    str.gsub!( "'", '&apos;' )
+    str.gsub!('&', '&amp;')
+    str.gsub!('<', '&lt;')
+    str.gsub!('>', '&gt;')
+    str.gsub!('"', '&quot;')
+    str.gsub!("'", '&apos;')
+
+    # Taken from bb-ruby, who took it from Rails Actionpack
+    str.gsub!(/\r\n?/, "\n") # \r\n and \r => \n
+    str.gsub!(/\n/, '<br>')  # 1 newline   => br
+
 
     # Let's iterate over the pieces to build a tree
     # It works like this:
