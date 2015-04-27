@@ -160,7 +160,9 @@ module BBCode
       start_tag = '<p>'
       result_str.gsub!(/\r\n?/, "\n")                   # \r\n and \r => \n
       result_str.gsub!(/\n\n+/, "</p>\n\n#{start_tag}") # 2+ newline  => paragraph
-      result_str.gsub!(/([^\n]\n)(?=[^\n])/, '\1<br>')  # 1 newline   => br
+      result_str.gsub!(/([^\n>]\n)(?=[^\n<])/, '\1<br>')# 1 newline   => br
+      result_str.gsub!(/(>)\n+/, '\1')           # 1 newline around tags => nothing
+      result_str.gsub!(/\n+(<)/, '\1')           # 1 newline around tags => nothing
       result_str.insert 0, start_tag
       result_str << '</p>'
     rescue BBCode::ParseError => e

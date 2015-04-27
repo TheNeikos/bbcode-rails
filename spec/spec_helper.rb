@@ -35,6 +35,13 @@ class QuoteTag < BBCode::Tag
   block_options :argument, :content
 
   on_layout do |args, content|
-    "<p>Text: #{content}</p><em>User: #{args}</em>"
+    <<OA
+<p>
+Text: #{content}
+</p>
+<em>
+User: #{args}
+</em>
+OA
   end
 end
