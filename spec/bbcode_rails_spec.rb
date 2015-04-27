@@ -7,36 +7,36 @@ describe BBCode do
 
   it 'correctly parses the i tag' do
     expect(ITag).not_to be nil
-    expect(BBCode.parse "[i]Test[/i]").to eq "<em>Test</em>"
+    expect(BBCode.parse "[i]Test[/i]").to eq "<p><em>Test</em></p>"
   end
 
   it 'correctly parses the br tag' do
     expect(BrTag).not_to be nil
-    expect(BBCode.parse "[br]").to eq "<br>"
+    expect(BBCode.parse "[br]").to eq "<p><br></p>"
   end
 
   it 'correctly parses the user tag' do
     expect(UserTag).not_to be nil
-    expect(BBCode.parse "[user=Neikos]").to eq "<p>Name: Neikos</p>"
+    expect(BBCode.parse "[user=Neikos]").to eq "<p><p>Name: Neikos</p></p>"
   end
 
   it 'correctly parses the quote tag' do
     expect(QuoteTag).not_to be nil
-    expect(BBCode.parse "[quote=Neikos]Hello[/quote]").to eq "<p>Text: Hello</p><em>User: Neikos</em>"
+    expect(BBCode.parse "[quote=Neikos]Hello[/quote]").to eq "<p><p>Text: Hello</p><em>User: Neikos</em></p>"
   end
 
   it 'correctly parses several tags' do
     expect(BBCode.parse "[quote=Neikos]Hello [i]Yo[/i][/quote]").to(
-      eq "<p>Text: Hello <em>Yo</em></p><em>User: Neikos</em>"
+      eq "<p><p>Text: Hello <em>Yo</em></p><em>User: Neikos</em></p>"
     )
   end
 
   it 'correctly parses the user tag with quotes' do
     expect(UserTag).not_to be nil
-    expect(BBCode.parse "[user=\"Neikos\"]").to eq "<p>Name: Neikos</p>"
+    expect(BBCode.parse "[user=\"Neikos\"]").to eq "<p><p>Name: Neikos</p></p>"
   end
 
-  it 'doesnt care about invalid tag nesting' do
+  it 'cares about invalid tag nesting' do
     expect(ITag).not_to be nil
     expect(BTag).not_to be nil
 
@@ -44,12 +44,12 @@ describe BBCode do
   end
 
   it 'doesnt parse unknown tags' do
-    expect(BBCode.parse "[what]'s [/up]").to eq "[what]&apos;s [/up]"
+    expect(BBCode.parse "[what]'s [/up]").to eq "<p>[what]&apos;s [/up]</p>"
   end
 
   it 'doesnt error out when closing inexisting tags' do
     expect(BTag).not_to be nil
-    expect(BBCode.parse "Hey [b] W [/fg] [/b] asd").to eq "Hey <strong> W [/fg] </strong> asd"
+    expect(BBCode.parse "Hey [b] W [/fg] [/b] asd").to eq "<p>Hey <strong> W [/fg] </strong> asd</p>"
   end
 
   it 'should reraise errors if one chooses so' do
@@ -59,11 +59,13 @@ describe BBCode do
 
   it 'should correctly escape html tags' do
     expect(BBCode.parse "<script>alert('Stealing your data...')</script>").to(
-     eq "&lt;script&gt;alert(&apos;Stealing your data...&apos;)&lt;/script&gt;"
+     eq "<p>&lt;script&gt;alert(&apos;Stealing your data...&apos;)&lt;/script&gt;</p>"
    )
   end
 
   it 'should correctly add newlines' do
-    expect(BBCode.parse "\r\n \n\n").to eq "<br> <br>"
+    expect(BBCode.parse "Hello!\r\n \n\nNew Paragraph :D").to(
+      eq "<p>Hello!\n<br> </p>\n\n<p>New Paragraph :D</p>"
+    )
   end
 end
