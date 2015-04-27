@@ -56,4 +56,14 @@ describe BBCode do
     expect(BTag).not_to be nil
     expect{BBCode.parse "Heya [b=Neikos]", true}.to raise_error(BBCode::ParseError)
   end
+
+  it 'should correctly escape html tags' do
+    expect(BBCode.parse "<script>alert('Stealing your data...')</script>").to(
+     eq "&lt;script&gt;alert(&apos;Stealing your data...&apos;)&lt;/script&gt;"
+   )
+  end
+
+  it 'should correctly add newlines' do
+    expect(BBCode.parse "\r\n \n\n").to eq "<br> <br><br>"
+  end
 end
