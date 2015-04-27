@@ -55,10 +55,16 @@ This will create `app/bbcode/user_tag.rb`.
 #app/bbcode/user.rb
 
 class UserTag < BBCode::Tag
-    block_name :user
-    on_layout do |args|
-        "TODO: Implement user tag"
-    end
+  # If your block uses an argument or can have content add the following line
+  # with your needed option
+  # block_options :argument, :content
+
+  # Be sure to put in only the arguments that you need.
+  # So if you only take an argument, remove contents, same the other way around.
+  # However if you have both, they have to be in the order of `arg, contents`
+  on_layout do |arg, contents|
+    "TODO: Implement user tag"
+  end
 end
 ```
 
@@ -68,11 +74,14 @@ You could now add something like:
 #app/bbcode/user.rb
 
 class UserTag < BBCode::Tag
-    block_name :user, :argument, :no_closing_tag
-    on_layout do |args|
-        user = User.find_by_id(args[1])
-        render partial: 'shared/userquote', locals: { user: user }
-    end
+  # If your block uses an argument or can have content add the following line
+  # with your needed option
+  # block_options :argument, :content
+  block_options :argument
+  on_layout do |arg|
+    user = User.find_by_id(arg)
+    render partial: 'shared/userquote', locals: { user: user }
+  end
 end
 ```
 
