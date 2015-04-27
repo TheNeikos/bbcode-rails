@@ -1,8 +1,8 @@
 class ImgTag < BBCode::Tag
-  block_name :img, :argument, :no_closing_tag
+  block_options :argument
 
-  on_layout do |args|
-    args[1].gsub!(/javascript:/, '')
-    "<img src='#{args[1]}'>"
+  on_layout do |arg|
+    args[1].gsub!(/^javascript:/, '')
+    "<img src='#{arg}'>"
   end
 end
