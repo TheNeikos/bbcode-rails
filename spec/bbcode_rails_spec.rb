@@ -65,7 +65,13 @@ describe BBCode do
 
   it 'should correctly add newlines' do
     expect(BBCode.parse "Hello!\r\n \n\nNew Paragraph :D").to(
-      eq "<p>Hello!\n<br> </p>\n\n<p>New Paragraph :D</p>"
+      eq "<p>Hello!<br> </p><p>New Paragraph :D</p>"
+    )
+  end
+
+  it 'should not add newlines at the end and beginning of tags' do
+    expect(BBCode.parse "Hello!\r\n \n\n[quote=123]\nNew Paragraph :D\n[/quote]").to(
+      eq "<p>Hello!<br> </p><p><p>Text: <br>New Paragraph :D</p><p></p><em>User: 123</em></p>"
     )
   end
 end
