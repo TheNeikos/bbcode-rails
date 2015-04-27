@@ -64,6 +64,6 @@ describe BBCode do
   end
 
   it 'should correctly add newlines' do
-    expect(BBCode.parse "\r\n \n\n").to eq "<br> <br><br>"
+    expect(BBCode.parse "\r\n \n\n").to eq "<br> <br>"
   end
 end
