@@ -30,7 +30,7 @@ module BBCode
 
     # Taken from bb-ruby, who took it from Rails Actionpack
     str.gsub!(/\r\n?/, "\n") # \r\n and \r => \n
-    str.gsub!(/\n/, '<br>')  # 1 newline   => br
+    str.gsub!(/\n+/, '<br>')  # 1+ newline   => br
 
 
     # Let's iterate over the pieces to build a tree
