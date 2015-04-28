@@ -22,12 +22,14 @@ describe BBCode do
 
   it 'correctly parses the quote tag' do
     expect(QuoteTag).not_to be nil
-    expect(BBCode.parse "[quote=Neikos]Hello[/quote]").to eq "<p><p>Text: Hello</p><em>User: Neikos</em></p>"
+    expect(BBCode.parse "[quote=Neikos]Hello[/quote]").to(
+      eq "<p><p>\nText: Hello\n</p>\n<em>\nUser: Neikos\n</em></p>"
+    )
   end
 
   it 'correctly parses several tags' do
     expect(BBCode.parse "[quote=Neikos]Hello [i]Yo[/i][/quote]").to(
-      eq "<p><p>Text: Hello <em>Yo</em></p><em>User: Neikos</em></p>"
+      eq "<p><p>\nText: Hello <em>Yo</em>\n</p>\n<em>\nUser: Neikos\n</em></p>"
     )
   end
 
@@ -65,13 +67,13 @@ describe BBCode do
 
   it 'should correctly add newlines' do
     expect(BBCode.parse "Hello!\r\n \n\nNew Paragraph :D").to(
-      eq "<p>Hello!<br> </p><p>New Paragraph :D</p>"
+      eq "<p>Hello!\n </p>\n\n<p>New Paragraph :D</p>"
     )
   end
 
   it 'should not add newlines at the end and beginning of tags' do
     expect(BBCode.parse "Hello!\r\n \n\n[quote=123]\nNew Paragraph :D\n[/quote]").to(
-      eq "<p>Hello!<br> </p><p><p>Text: <br>New Paragraph :D</p><p></p><em>User: 123</em></p>"
+      eq "<p>Hello!\n </p>\n\n<p><p>\nText: \nNew Paragraph :D</p>\n\n<p></p>\n<em>\nUser: 123\n</em></p>"
     )
   end
 end
